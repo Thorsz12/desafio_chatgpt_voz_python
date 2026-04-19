@@ -1,35 +1,24 @@
-import openai
-import speech_recognition as sr
-from gtts import gTTS
-import os
+# ChatGPT por Voz com Python
 
-openai.api_key = "SUA_API_KEY"
+Este projeto implementa uma aplicação de conversação por voz utilizando Python, integrando tecnologias de Speech-to-Text e Text-to-Speech.
 
-def ouvir_audio():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Fale algo...")
-        audio = recognizer.listen(source)
+## Funcionalidades
 
-    try:
-        texto = recognizer.recognize_google(audio, language='pt-BR')
-        print("Você disse:", texto)
-        return texto
-    except:
-        return ""
+- Captura de áudio via microfone
+- Conversão de voz para texto
+- Integração com ChatGPT (OpenAI)
+- Conversão de resposta em áudio
 
-def responder_chatgpt(texto):
-    resposta = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": texto}]
-    )
-    return resposta.choices[0].message.content
+## Tecnologias
 
-def falar(texto):
-    tts = gTTS(texto, lang='pt')
-    tts.save("resposta.mp3")
-    os.system("start resposta.mp3")
+- Python
+- OpenAI API
+- SpeechRecognition
+- gTTS
 
+## Como executar
+
+1. Instale as dependências:
 texto = ouvir_audio()
 resposta = responder_chatgpt(texto)
 print("Resposta:", resposta)
